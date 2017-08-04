@@ -3,38 +3,32 @@ import java.awt.datatransfer.StringSelection;
 import sun.awt.datatransfer.ClipboardTransferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
+
+msgBox = {titleBar, message -> JOptionPane.showMessageDialog(null, message, titleBar, JOptionPane.INFORMATION_MESSAGE)}
 
 
 data = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
-println "Definiton copied to clipboard"
-//println data.getClass()
-//Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
-/* -- get clipboard context */
-
-//Transferable data = clipboard.getContents(null);
 
 /* -- is context string type ? */
-
 boolean bIsText = ( ( data != null ) && ( data.isDataFlavorSupported( DataFlavor.stringFlavor ) ) );
 
-s = (String)data.getTransferData( DataFlavor.stringFlavor );
-//println s
-l = s.split("\n").collect{it}
-newL = []
-//l.eachWithIndex {line, index -> println "List number: ${index} Line is: ${line}"}
-0.step l.size(), 2, {
-    newL.add(l[it])
+/* If string then do do action */
+if (bIsText) {
+    s = (String)data.getTransferData( DataFlavor.stringFlavor );
+    l = s.split("\n").collect{it}
+    newL = []
+    
+    0.step l.size(), 2, {
+        newL.add(l[it])
+    }
+	// Replace to clipboard
+    StringSelection ss = new StringSelection(newL.join("\n"))
+    
+    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+     // Print OK    
+    msgBox("Information", "Selection has been copied to clipboard")
+    
+} else {
+        msgBox("Error", "Clipboard contents are not string datatype")
 }
-
-//newL.each {println it}	
-
-//println s
-//StringSelection ss = new StringSelection(s.join("\n"))
-// Copy to clipboard
-StringSelection ss = new StringSelection(newL.join("\n"))
-
-Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
-println "Definiton copied to clipboard"
-
-println "Finishing!!"
