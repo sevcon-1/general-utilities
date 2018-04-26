@@ -1,0 +1,7 @@
+COLUMN name new_value pdbname
+COLUMN sessu new_value uname
+set termout off
+select lower(sys_context('USERENV','SESSION_USER')) sessu from dual;
+select name from v$pdbs;
+set termout on
+set sqlprompt '&uname@&pdbname> ' 
