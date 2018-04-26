@@ -1,3 +1,5 @@
+REM glogin.sql
+REM C:\Oracle\product\12.1.0\client_1\sqlplus\admin
 COLUMN name new_value pdbname
 COLUMN sessu new_value uname
 set termout off
